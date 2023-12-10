@@ -1,0 +1,137 @@
+<!-- templates/team_app/team_member_form.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if form.instance.pk %}Edit{% else %}Add{% endif %} Team Member</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+
+    <form method="post" enctype="multipart/form-data" class="needs-validation" 
+    novalidate>
+
+        {% csrf_token %}
+
+        <div class="flex items-center w-full justify-center">
+
+
+            <div class="flex flex-col shadow-xl mt-10 w-1/5">
+
+
+                <div class="pl-4 my-3">
+
+                    <a href="{% url 'team_member_add' %}"> <i class="fa fa-plus fa-large px-4 text-right w-full"
+                            aria-hidden="true"></i> </a>
+                    <h1 class="text-2xl text-left text-black">{% if form.instance.pk %}Edit{% else %}Add{% endif %} Team
+                        Member</h1>
+                    <h3 class="text-base text-left text-stone-300 "> Set email, location and role</h3>
+                </div>
+
+
+                <div class="w-full px-4 mt-3 pl-4">
+                    <div class="w-full text-base pt-4 pb-2 font-semibold border-t-2"> Info </div>
+                    <div class="flex flex-col">
+                        
+                        {{ form.first_name }}
+
+                        {{ form.last_name }} 
+
+                        {{ form.email }}
+
+                        {{ form.phone_number }}
+
+                        {{ form.role }}
+
+                    </div>
+
+                    <div class="w-full text-base pt-4 pb-2 font-semibold"> Role </div>
+                    <div class="mb-3">
+                        <div class="flex justify-between border-b-2 justify-center">
+                            <label class="text-sm  my-2" for="reg">Regular - Can't delete members</label>
+                            <input type="radio" id="reg" name="role" value="{% if form.role %}true{% endif %}">
+                        </div>
+
+                        <div class="flex justify-between border-b-2 justify-center">
+                            <label class="text-sm my-2" for="admin">Admin - Can delete members</label>
+                            <input type="radio" id="admin" name="role" value="{% if form.role %}true{% endif %}">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between">
+                            <button
+                                class="text-red-600 outline outline-red-200 rounded px-3 py-2 mb-3 mt-5">Delete</button>
+                            <button type="submit"
+                                class="bg-blue-500 text-white rounded px-3 py-2 mb-3 mt-5">Save</button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </form>
+<!-- 
+    <div class="container mt-5">
+        <h1 class="mb-4">{% if form.instance.pk %}Edit{% else %}Add{% endif %} Team Member</h1>
+        <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+            {% csrf_token %}
+
+            <div class="form-group">
+                {{ form.first_name.label_tag }}
+                {{ form.first_name }}
+                {% if form.first_name.errors %}
+                <div class="invalid-feedback">{{ form.first_name.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.last_name.label_tag }}
+                {{ form.last_name }}
+                {% if form.last_name.errors %}
+                <div class="invalid-feedback">{{ form.last_name.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.email.label_tag }}
+                {{ form.email }}
+                {% if form.email.errors %}
+                <div class="invalid-feedback">{{ form.email.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.phone_number.label_tag }}
+                {{ form.phone_number }}
+                {% if form.phone_number.errors %}
+                <div class="invalid-feedback">{{ form.phone_number.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                {{ form.role.label_tag }}
+                {{ form.role }}
+                {% if form.role.errors %}
+                <div class="invalid-feedback">{{ form.role.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+        <a href="{% url 'team_member_list' %}" class="btn btn-secondary mt-3">Back to List</a>
+    </div> -->
+
+</body>
+
+</html>
