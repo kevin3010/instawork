@@ -1,6 +1,6 @@
 # team_app/urls.py
 from django.urls import path
-from .views import TeamMemberListView, TeamMemberUpdateView, TeamMemberCreateView
+from .views import TeamMemberListView, TeamMemberUpdateView, TeamMemberCreateView, TeamMemberDeleteView
 
 urlpatterns = [
     path('list/', TeamMemberListView.as_view(), name='team_member_list'),

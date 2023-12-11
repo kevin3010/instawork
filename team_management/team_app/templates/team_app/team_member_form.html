@@ -13,8 +13,7 @@
 
 <body>
 
-    <form method="post" enctype="multipart/form-data" class="needs-validation" 
-    novalidate>
+    <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
 
         {% csrf_token %}
 
@@ -37,40 +36,75 @@
                 <div class="w-full px-4 mt-3 pl-4">
                     <div class="w-full text-base pt-4 pb-2 font-semibold border-t-2"> Info </div>
                     <div class="flex flex-col">
-                        
-                        {{ form.first_name }}
 
-                        {{ form.last_name }} 
+                        {{ form.first_name }}
+                        {% if form.first_name.errors %}
+                        <div class="invalid-feedback text-sm pl-2 -mt-2 mb-2 text-red-500">{{ form.first_name.errors.0 }}</div>
+                        {% endif %}
+
+
+                        {{ form.last_name }}
+                        {% if form.last_name.errors %}
+                        <div class="invalid-feedback text-sm pl-2 -mt-2 mb-2 text-red-500">{{ form.last_name.errors.0 }}
+                        </div>
+                        {% endif %}
 
                         {{ form.email }}
+                        {% if form.email.errors %}
+                        <div class="invalid-feedback text-sm pl-2 -mt-2 mb-2 text-red-500">{{ form.email.errors.0 }}
+                        </div>
+                        {% endif %}
 
                         {{ form.phone_number }}
+                        {% if form.phone_number.errors %}
+                        <div class="invalid-feedback text-sm pl-2 -mt-2 mb-2 text-red-500">{{ form.phone_number.errors.0 }}</div>
+                        {% endif %}
 
-                        {{ form.role }}
+                        {{ form.role.name }}
+
+                        {{ form.role.value }}
+
 
                     </div>
 
                     <div class="w-full text-base pt-4 pb-2 font-semibold"> Role </div>
                     <div class="mb-3">
                         <div class="flex justify-between border-b-2 justify-center">
-                            <label class="text-sm  my-2" for="reg">Regular - Can't delete members</label>
-                            <input type="radio" id="reg" name="role" value="{% if form.role %}true{% endif %}">
+                            <label
+                                class="text-sm  my-2 {% if form.role.value == form.role.field.choices.2.0 %}text-black{% else %}text-gray-400{% endif %}"
+                                for="reg" id="regular">Regular - Can't delete members</label>
+                                <input class="form-check-input" id="reg" type="radio" name="{{ form.role.name }}" value="{{ form.role.field.choices.2.0 }}" {% if form.role.value == form.role.field.choices.2.0 %}checked{% endif %}
+                                onclick="(function(element) { document.getElementById('regular').style.color = 'black'; document.getElementById('admin').style.color = 'gray';  })(this)"
+                                >
                         </div>
 
                         <div class="flex justify-between border-b-2 justify-center">
-                            <label class="text-sm my-2" for="admin">Admin - Can delete members</label>
-                            <input type="radio" id="admin" name="role" value="{% if form.role %}true{% endif %}">
+                            <label
+                                class="text-sm my-2 {% if form.role.value == form.role.field.choices.1.0 %}text-black{% else %}text-gray-400{% endif %}"
+                                for="admin" id="admin">Admin - Can delete members</label>
+                                <input class="form-check-input" id="admin" type="radio" name="{{ form.role.name }}" value="{{ form.role.field.choices.1.0 }}" {% if form.role.value == form.role.field.choices.1.0 %}checked{% endif %}
+                                onclick="(function(element) { document.getElementById('admin').style.color = 'black'; document.getElementById('regular').style.color = 'gray';  })(this)"
+                                >
                         </div>
                     </div>
 
                     <div>
                         <div class="flex justify-between">
-                            <button
-                                class="text-red-600 outline outline-red-200 rounded px-3 py-2 mb-3 mt-5">Delete</button>
-                            <button type="submit"
-                                class="bg-blue-500 text-white rounded px-3 py-2 mb-3 mt-5">Save</button>
-                        </div>
 
+                            {% if form.instance.pk %}
+                            <button type="submit" name="delete"
+                                class="text-red-600 outline outline-red-200 rounded px-3 py-2 mb-3 mt-5">Delete</button>
+                            <button type="submit" name="save"
+                                class="bg-blue-500 text-white rounded px-3 py-2 mb-3 mt-5">Save</button>
+                            {% else %}
+                            <div class="w-full">
+                                <button type="submit" name="save"
+                                class="bg-blue-500 text-white bg-blue-500 rounded px-3 py-2 mb-3 mt-5 float-right">Save</button>
+                            </div>
+                            
+                            {% endif %}
+
+                        </div>
                     </div>
 
                 </div>
@@ -133,5 +167,7 @@
     </div> -->
 
 </body>
+
+
 
 </html>
